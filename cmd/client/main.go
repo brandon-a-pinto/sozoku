@@ -1,19 +1,14 @@
 package main
 
 import (
-	"log"
-	"net"
+	"github.com/brandon-a-pinto/sozoku/internal/client/connection"
 )
 
 func main() {
-	ip := "127.0.0.1"
-	port := "4444"
-	address := ip + ":" + port
-
-	connection, err := net.Dial("tcp", address)
+	conn, err := connection.ConnectWithServer("127.0.0.1", "4444")
 	if err != nil {
-		log.Printf("[-] Connection refused\n")
-	} else {
-		log.Printf("[+] Connection established (%s)\n", connection.RemoteAddr().String())
+		panic(err)
 	}
+
+	defer conn.Close()
 }
